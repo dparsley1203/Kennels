@@ -11,7 +11,7 @@ export const CustomerProvider = (props) => {
         .then(setCustomers)
     }
 
-    const addCustomers = customerObj => {
+    const addCustomer = customerObj => {
         return fetch("https://localhost:8088/customers", {
             method: "POSt",
             headers: {
@@ -24,7 +24,7 @@ export const CustomerProvider = (props) => {
 
     return (
         <CustomerContext.Provider value={{
-            customers, getCustomers, addCustomers
+            customers, getCustomers, addCustomer
         }}>
             {props.children}
         </CustomerContext.Provider>
