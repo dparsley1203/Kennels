@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AnimalContext } from "./AnimalProvider"
 import "./Animal.css"
-import { useParams } from "react-router-dom"
+import { useParams, useHistory } from "react-router-dom"
 
 export const AnimalDetail = () => {
-  const { getAnimalById } = useContext(AnimalContext)
+  const { getAnimalById, releaseAnimal } = useContext(AnimalContext)
 
 	const [animal, setAnimal] = useState({})
 
+    const history = useHistory()
 	const { animalId } = useParams(); //returns an obj with all dynamic URL parameters as key:value pairs
 
   useEffect(() => {
@@ -18,6 +19,13 @@ export const AnimalDetail = () => {
     })
     }, [])
 
+    const handleRelease = () => {
+        releaseAnimal(animal.id)
+        .then(() => {
+            history.push("/animals")
+        })
+    }
+
 
     
   return (
@@ -26,6 +34,10 @@ export const AnimalDetail = () => {
       <div className="animal__breed">{animal.breed}</div>
       <div className="animal__location">Location: {animal.location?.name}</div>
       <div className="animal__owner">Customer: {animal.customer?.name}</div>
+      <button onClick={ handleRelease }>Release Animal</button>
+      <button onClick={() => {
+            history.push(`/animals/edit/${animal.id}`)
+        }}>Edit</button>
     </section>
   )
 }
