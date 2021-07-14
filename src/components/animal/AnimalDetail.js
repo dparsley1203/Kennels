@@ -1,15 +1,14 @@
 import React, { useContext, useEffect, useState } from "react"
 import { AnimalContext } from "./AnimalProvider"
 import "./Animal.css"
-import { useParams, useHistory } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 export const AnimalDetail = () => {
   const { getAnimalById } = useContext(AnimalContext)
 
 	const [animal, setAnimal] = useState({})
 
-	const {animalId} = useParams();
-	const history = useHistory();
+	const { animalId } = useParams(); //returns an obj with all dynamic URL parameters as key:value pairs
 
   useEffect(() => {
     console.log("useEffect", animalId)
@@ -20,14 +19,13 @@ export const AnimalDetail = () => {
     }, [])
 
 
-    //Edited out the last two lines.  Allowed dog detail to show.
+    
   return (
     <section className="animal">
       <h3 className="animal__name">{animal.name}</h3>
       <div className="animal__breed">{animal.breed}</div>
-      {/* What's up with the question mark???? See below.*/}
-      {/* <div className="animal__location">Location: {animal.location.name}</div> */}
-      {/* <div className="animal__owner">Customer: {animal.customer.name}</div> */}
+      <div className="animal__location">Location: {animal.location?.name}</div>
+      <div className="animal__owner">Customer: {animal.customer?.name}</div>
     </section>
   )
 }

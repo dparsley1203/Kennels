@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom"
 export const AnimalList = () => {
   // This state changes when `getAnimals()` is invoked below
   const { animals, getAnimals } = useContext(AnimalContext)
+  const history = useHistory()
   // const { locations, getLocations } = useContext(LocationContext)
   // const { customers, getCustomers } = useContext(CustomerContext)
 
@@ -23,7 +24,6 @@ export const AnimalList = () => {
 
   }, [])
 
-  const history = useHistory()
   return (
     <>
 
