@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react"
 import { AnimalContext } from "./AnimalProvider"
 import { AnimalCard } from "./AnimalCard"
 import "./Animal.css"
+import { useHistory } from "react-router-dom"
 // import { CustomerContext } from "../customer/CustomerProvider"
 // import { LocationContext } from "../location/LocationProvider"
-import { useHistory } from "react-router-dom"
 
 export const AnimalList = () => {
   // This state changes when `getAnimals()` is invoked below
-  const { animals, getAnimals } = useContext(AnimalContext)
+  const { animals, getAnimals, searchTerms } = useContext(AnimalContext)
+  const [ filteredAnimals, setFiltered ] = useState([])
   const history = useHistory()
   // const { locations, getLocations } = useContext(LocationContext)
   // const { customers, getCustomers } = useContext(CustomerContext)
@@ -24,6 +25,15 @@ export const AnimalList = () => {
 
   }, [])
 
+  useEffect(() => {
+    if(searchTerms !== "") {
+      const subset = animals.filter(animal => animal.name.toLowerCase().includes(searchTerms))
+      setFiltered(subset)
+    } else {
+      setFiltered(animals)
+    }
+  })
+
   return (
     <>
 
@@ -34,7 +44,7 @@ export const AnimalList = () => {
       </button>
       <div className="animals">
           {
-              animals.map(animal => {
+              filteredAnimals.map(animal => {
                   return <AnimalCard key={animal.id} animal={animal} />
               })
           }
